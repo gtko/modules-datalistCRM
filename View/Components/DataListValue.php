@@ -25,12 +25,14 @@ class DataListValue extends Component
     {
         $datas = [];
         $value =  $this->item->{$this->field};
+        $attributeBag = $this->item;
         if($this->options['format'] ?? null){
             $value =$this->options['format']($this->item);
+            $attributeBag = $value;
         }
 
         if($this->options['component'] ?? false) {
-            $datas = ($this->options['component']['attribute'] instanceof \Closure) ? $this->options['component']['attribute']($this->item) : [$this->options['component']['attribute'] => $value];
+            $datas = ($this->options['component']['attribute'] instanceof \Closure) ? $this->options['component']['attribute']($attributeBag) : [$this->options['component']['attribute'] => $value];
         }
 
         return view('datalistcrm::components.data-list-value', [
