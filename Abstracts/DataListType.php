@@ -7,7 +7,7 @@ use Modules\BaseCore\Interfaces\RepositoryFetchable;
 
 abstract class DataListType
 {
-
+    protected bool $sortable = false;
     protected bool $searchable = true;
 
     abstract public function getFields():array;
@@ -19,5 +19,10 @@ abstract class DataListType
     public function isSearchable(): bool
     {
         return $this->searchable;
+    }
+
+    public function isSortable(): bool
+    {
+        return $this->sortable;
     }
 }

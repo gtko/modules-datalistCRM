@@ -36,13 +36,22 @@
                 <tr>
                     @foreach($fields as $field => $options)
                         <th class="whitespace-nowrap">
-                            @if(is_array($options))
-                                @if($options['label'])
-                                    {{ $options['label'] }}
+                            <div  @if($options['sortable'] ?? $sortable )  class="flex cursor-pointer items-center justify-start" wire:click="sort('{{$field}}')" @endif>
+                                @if(is_array($options))
+                                    @if($options['label'])
+                                        {{ $options['label'] }}
+                                    @endif
+                                @else
+                                    {{ \Illuminate\Support\Str::ucfirst($field) }}
                                 @endif
-                            @else
-                                {{ \Illuminate\Support\Str::ucfirst($field) }}
-                            @endif
+                                @if(($sort[$field] ?? '') === 'asc')
+                                    <span class="ml-2">@icon('asc', 16, 'mr-2')</span>
+                                @elseif(($sort[$field] ?? '') === 'desc')
+                                    <span class="ml-2">@icon('desc', 16, 'mr-2')</span>
+                                @elseif($options['sortable'] ?? $sortable )
+                                        <span class="ml-2">--</span>
+                                @endif
+                            </div>
                         </th>
                     @endforeach
                 </tr>
