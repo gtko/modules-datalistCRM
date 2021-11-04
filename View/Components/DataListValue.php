@@ -31,7 +31,6 @@ class DataListValue extends Component
             $attributeBag = $value;
         }
 
-
         if($this->options['component'] ?? false) {
             $datas = ($this->options['component']['attribute'] instanceof \Closure) ? $this->options['component']['attribute']($attributeBag) : [$this->options['component']['attribute'] => $value];
         }
