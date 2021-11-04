@@ -4,7 +4,13 @@
         <div class="flex flex-wrap justify-between sm:flex-nowrap items-center mt-2">
             @if(!empty($create))
                 @can($create['permission'][0] ?? '', $create['permission'][1] ?? '')
-                    <a href="{{$create['route']($parents)}}" class="btn btn-primary shadow-md mr-2 {{$create['class_link'] ?? ''}}">
+                    @php
+                        $params = $parents;
+                        if(is_callable($options['action']['params'] ?? null)){
+                            $params = $options['action']['params']($parents);
+                        }
+                    @endphp
+                    <a href="{{$create['route']($params)}}" class="btn btn-primary shadow-md mr-2 {{$create['class_link'] ?? ''}}">
                         @if($create['icon'] ?? false)
                             @icon($create['icon'],null,"w-4 h-4 mr-1")
                         @endif
@@ -69,9 +75,17 @@
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
                                 @foreach($actions as $action)
+
+                                    @php
+                                        $params = [...$parents, $item->id];
+                                        if(is_callable($action['params'] ?? null)){
+                                            $params = $action['params']($item);
+                                        }
+                                    @endphp
+
                                     @if($action['permission'] ?? false)
                                     @can($action['permission'][0], $action['permission'][1])
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']([...$parents, $item->id])}}">
+                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
                                             @if($action['icon'] ?? false)
                                                 @icon($action['icon'], null, 'w-4 h-4 mr-1')
                                             @endif
@@ -79,7 +93,7 @@
                                         </a>
                                     @endcan
                                     @else
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']([...$parents, $item->id])}}">
+                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
                                             @if($action['icon'] ?? false)
                                                 @icon($action['icon'], null, 'w-4 h-4 mr-1')
                                             @endif
