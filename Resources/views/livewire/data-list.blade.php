@@ -4,13 +4,7 @@
         <div class="flex flex-wrap justify-between sm:flex-nowrap items-center mt-2">
             @if(!empty($create))
                 @can($create['permission'][0] ?? '', $create['permission'][1] ?? '')
-                    @php
-                        $params = $parents;
-                        if(is_callable($options['action']['params'] ?? null)){
-                            $params = $options['action']['params']($parents);
-                        }
-                    @endphp
-                    <a href="{{$create['route']($params)}}" class="btn btn-primary shadow-md mr-2 {{$create['class_link'] ?? ''}}">
+                    <a href="{{$create['route']($parents)}}" class="btn btn-primary shadow-md mr-2 {{$create['class_link'] ?? ''}}">
                         @if($create['icon'] ?? false)
                             @icon($create['icon'],null,"w-4 h-4 mr-1")
                         @endif
@@ -42,22 +36,13 @@
                 <tr>
                     @foreach($fields as $field => $options)
                         <th class="whitespace-nowrap">
-                            <div  @if($options['sortable'] ?? $sortable )  class="flex cursor-pointer items-center justify-start" wire:click="sort('{{$field}}')" @endif>
-                                @if(is_array($options))
-                                    @if($options['label'])
-                                        {{ $options['label'] }}
-                                    @endif
-                                @else
-                                    {{ \Illuminate\Support\Str::ucfirst($field) }}
+                            @if(is_array($options))
+                                @if($options['label'])
+                                    {{ $options['label'] }}
                                 @endif
-                                @if(($sort[$field] ?? '') === 'asc')
-                                    <span class="ml-2">@icon('asc', 16, 'mr-2')</span>
-                                @elseif(($sort[$field] ?? '') === 'desc')
-                                    <span class="ml-2">@icon('desc', 16, 'mr-2')</span>
-                                @elseif($options['sortable'] ?? $sortable )
-                                        <span class="ml-2">--</span>
-                                @endif
-                            </div>
+                            @else
+                                {{ \Illuminate\Support\Str::ucfirst($field) }}
+                            @endif
                         </th>
                     @endforeach
                 </tr>
@@ -75,17 +60,9 @@
                         <td class="table-report__action w-56">
                             <div class="flex justify-center items-center">
                                 @foreach($actions as $action)
-
-                                    @php
-                                        $params = [...$parents, $item->id];
-                                        if(is_callable($action['params'] ?? null)){
-                                            $params = $action['params']($item);
-                                        }
-                                    @endphp
-
                                     @if($action['permission'] ?? false)
                                     @can($action['permission'][0], $action['permission'][1])
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
+                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']([...$parents, $item->id])}}">
                                             @if($action['icon'] ?? false)
                                                 @icon($action['icon'], null, 'w-4 h-4 mr-1')
                                             @endif
@@ -93,7 +70,7 @@
                                         </a>
                                     @endcan
                                     @else
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
+                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']([...$parents, $item->id])}}">
                                             @if($action['icon'] ?? false)
                                                 @icon($action['icon'], null, 'w-4 h-4 mr-1')
                                             @endif
