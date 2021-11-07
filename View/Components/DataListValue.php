@@ -29,6 +29,7 @@ class DataListValue extends Component
             $value =$this->options['format']($this->item);
         }
 
+
         if($this->options['component'] ?? false) {
             $datas = ($this->options['component']['attribute'] instanceof \Closure) ? $this->options['component']['attribute']($this->item) : [$this->options['component']['attribute'] => $value];
         }
