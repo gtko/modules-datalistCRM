@@ -84,21 +84,47 @@
                                     @endphp
 
                                     @if($action['permission'] ?? false)
-                                    @can($action['permission'][0], $action['permission'][1])
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
-                                            @if($action['icon'] ?? false)
-                                                @icon($action['icon'], null, 'w-4 h-4 mr-1')
+                                        @can($action['permission'][0], $action['permission'][1])
+                                            @if($action['method'] ?? false)
+                                                <form method="POST" action="{{$action['route']($params)}}">
+                                                    @csrf
+                                                    <input type="hidden" name="_method" value="{{$action['method']}}">
+                                                    <button class="border-0 bg-transparent flex items-center mr-3 p-0 m-0">
+                                                        @if($action['icon'] ?? false)
+                                                            @icon($action['icon'], null, 'w-4 h-4 mr-1')
+                                                        @endif
+                                                        {{$action['label'] ?? ''}}
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
+                                                    @if($action['icon'] ?? false)
+                                                        @icon($action['icon'], null, 'w-4 h-4 mr-1')
+                                                    @endif
+                                                    {{$action['label'] ?? ''}}
+                                                </a>
                                             @endif
-                                            {{$action['label'] ?? ''}}
-                                        </a>
-                                    @endcan
+                                        @endcan
                                     @else
-                                        <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
-                                            @if($action['icon'] ?? false)
-                                                @icon($action['icon'], null, 'w-4 h-4 mr-1')
-                                            @endif
-                                            {{$action['label'] ?? ''}}
-                                        </a>
+                                        @if($action['method'] ?? true)
+                                            <form method="POST" action="{{$action['route']($params)}}">
+                                                @csrf
+                                                <input type="hidden" name="_method" value="{{$action['method']}}">
+                                                <button class="border-0 bg-transparent flex items-center mr-3 p-0 m-0">
+                                                    @if($action['icon'] ?? false)
+                                                        @icon($action['icon'], null, 'w-4 h-4 mr-1')
+                                                    @endif
+                                                    {{$action['label'] ?? ''}}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <a class="flex items-center mr-3 {{$action['class_link'] ?? ''}}" href="{{$action['route']($params)}}">
+                                                @if($action['icon'] ?? false)
+                                                    @icon($action['icon'], null, 'w-4 h-4 mr-1')
+                                                @endif
+                                                {{$action['label'] ?? ''}}
+                                            </a>
+                                        @endif
                                     @endif
                                 @endforeach
                             </div>
