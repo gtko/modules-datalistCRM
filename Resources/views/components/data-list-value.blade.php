@@ -23,6 +23,7 @@
 
             @cannot($options['action']['permission'][0] ?? null, $options['action']['permission'][1] ?? null)
                 @if($options['component'] ?? null)
+
                     <x-datalistcrm::dynamics :component="$options['component']['name']"
                                              :datas="$datas ?? []"/>
                 @else
