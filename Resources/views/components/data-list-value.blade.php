@@ -1,6 +1,7 @@
 <div>
     @if(is_array($options))
         @if($options['action'] ?? null)
+
             @can($options['action']['permission'][0] ?? null, $options['action']['permission'][1] ?? null)
 
                 @php
