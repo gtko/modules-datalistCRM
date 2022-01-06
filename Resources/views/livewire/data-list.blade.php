@@ -21,7 +21,7 @@
 
             @if($searchable)
                 <div class="search hidden sm:block">
-                    <input type="text" wire:model.debounce.500ms="search" class="w-full search__input form-control border-transparent placeholder-theme-13" placeholder="Recherche ...">
+                    <input type="text" wire:model.defer.debounce.500ms="search" class="w-full search__input form-control border-transparent placeholder-theme-13" placeholder="Recherche ...">
                     <span class="flex items-center">
                     <span wire:loading.remove>
                         @icon('search',null,'search__icon dark:text-gray-300')
