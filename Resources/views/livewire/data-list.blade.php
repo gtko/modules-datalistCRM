@@ -64,8 +64,12 @@
 
                 </thead>
                 <tbody>
+
+
                 @forelse($datas as $item)
-                    <tr class="intro-x">
+                    <tr class="intro-x" @if($datalist->link($item)) link="{{$datalist->link($item)}}" @endif
+                    @if($datalist->link($item)) link-blank="{{$datalist->link($item)}}" @endif
+                    >
                         @foreach($fields as $field => $options)
                             <td class="text-left {{$options['class'] ?? ''}}">
                                 <x-datalistcrm::data-list-value :item="$item" :field="$field" :options="$options" :parents="$parents"/>

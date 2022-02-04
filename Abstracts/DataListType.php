@@ -16,6 +16,17 @@ abstract class DataListType
 
     abstract public function getRepository(array $parents = []):RepositoryFetchable;
 
+
+    public function link($params = []): string
+    {
+        return '';
+    }
+
+    public function linkBlank($params = []): string
+    {
+        return '';
+    }
+
     public function isSearchable(): bool
     {
         return $this->searchable;

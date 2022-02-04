@@ -114,6 +114,7 @@ class DataList extends Component
             return $repository->fetchSearch($this->search);
         }
 
+
         return $repository->fetchAll();
     }
 
@@ -153,8 +154,10 @@ class DataList extends Component
         /** @var DataListType $type */
         $type = new $this->datalistclass;
 
+
         return view('datalistcrm::livewire.data-list', [
             'datas' => $this->getDatas($type->getRepository($this->parents), $type),
+            'datalist' => $type,
             'fields' => $type->getFields(),
             'actions' => $type->getActions(),
             'create' => $type->getCreate(),
