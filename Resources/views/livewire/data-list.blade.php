@@ -64,6 +64,8 @@
 
                 </thead>
                 <tbody>
+
+
                 @forelse($datas as $item)
                     <tr class="intro-x">
                         @foreach($fields as $field => $options)
