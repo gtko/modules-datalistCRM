@@ -67,7 +67,7 @@
 
 
                 @forelse($datas as $item)
-                    <tr class="intro-x" @if($datalist->link($item)) link="{{$datalist->link($item)}}" @endif
+                    <tr @if($datalist->link($item)) link="{{$datalist->link($item)}}" @endif
                     @if($datalist->link($item)) link-blank="{{$datalist->link($item)}}" @endif
                     >
                         @foreach($fields as $field => $options)
