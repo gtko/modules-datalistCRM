@@ -3,6 +3,7 @@
 namespace Modules\DataListCRM\Http\Livewire;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Livewire\WithPagination;
 use Modules\BaseCore\Interfaces\RepositoryFetchable;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Livewire\Component;
@@ -12,6 +13,9 @@ use Modules\DataListCRM\Abstracts\DataListType;
 
 class DataList extends Component
 {
+
+    use WithPagination;
+
     public string $title;
     public string $datalistclass;
     public array $parents = [];
